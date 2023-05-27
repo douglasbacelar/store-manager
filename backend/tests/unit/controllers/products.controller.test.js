@@ -13,7 +13,7 @@ const { productController } = require('../../../src/controllers');
 const { mockNotFoundProduct, mockFoundAllProduct } = require('./mocks/products.controller.mock');
 
 describe('Controller -> Testando Products Controller', function () {
-  describe('Procura de produto com id inexistente e existente', function () {
+  describe('GET -Procura de produto com id inexistente e existente', function () {
     it('ProductId inexistente status 404 e mensagem product not found', async function () {
      // Arrange
       const res = {};
@@ -48,7 +48,7 @@ describe('Controller -> Testando Products Controller', function () {
     });
   });
 
-  describe('Listagem dos produtos', function () {
+  describe('GET - Listagem dos produtos', function () {
     it('Lista todos os produtos', async function () {
      // Arrange
       const res = {};
@@ -63,6 +63,25 @@ describe('Controller -> Testando Products Controller', function () {
 
       expect(res.status).to.have.been.calledWith(200);
       expect(res.json).to.have.been.calledWith(mockFoundAllProduct);
+    });
+  });
+
+  describe('Model -> Testes endpoint POST', function () {
+    it('Cria um novo produto', async function () {
+     // Arrange
+      const res = {};
+      const req = { body: { name: 'Novo produto' } };
+      sinon.stub(productService, 'createProduct')
+      .resolves({ type: null, message: { id: 4, name: 'Novo produto' } });
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      // Act
+
+      await productController.createProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(201);
+      expect(res.json).to.have.been.calledWith(mockFoundAllProduct[3]);
     });
   });
   

@@ -16,6 +16,10 @@ const mockFoundAllProduct = [
     id: 3,
     name: 'Escudo do CapitÃ£o AmÃ©rica',
   },
+  {
+    id: 4,
+    name: 'Novo produto',
+  },
 ];
 
 module.exports = { 

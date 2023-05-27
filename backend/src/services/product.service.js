@@ -11,7 +11,16 @@ const getId = async (productId) => {
   return { type: null, message: listId };
 };
 
+const createProduct = async (name) => {
+  if (!name) return { type: 404, message: 'Input your product' };
+  const newProductId = await productModel.createProduct({ name });
+  const newProduct = await productModel.getId(newProductId);
+
+  return { type: null, message: newProduct };
+};
+
 module.exports = {
   getAll,
   getId,
+  createProduct,
 };

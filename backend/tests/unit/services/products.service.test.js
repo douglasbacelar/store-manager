@@ -4,10 +4,11 @@ const sinon = require('sinon');
 const { productService } = require('../../../src/services');
 const { productModel } = require('../../../src/models');
 const { correctProductIdMockService,
-   productsMockService } = require('./mocks/products.service.mock');
+   productsMockService, 
+   newProductService } = require('./mocks/products.service.mock');
 
 describe('Service -> Verificando service products', function () {
-  describe('listagem de todos os produtos', function () {
+  describe('GET - listagem de todos os produtos', function () {
     it('Retorna lista completa dos produtos', async function () {
       // Arrange
       sinon.stub(productModel, 'getAll').resolves(productsMockService);
@@ -19,7 +20,7 @@ describe('Service -> Verificando service products', function () {
     });
   });
 
-  describe('listagem de produto especifico', function () {
+  describe('GET- listagem de produto especifico', function () {
     it('Falhando se o id do produto não existe', async function () {
        // Arrange
       sinon.stub(productModel, 'getId').resolves(undefined);
@@ -37,6 +38,34 @@ describe('Service -> Verificando service products', function () {
       const result = await productService.getId(2);
       // Assert
       expect(result.message).to.be.deep.equal(correctProductIdMockService);
+    });
+  });
+
+  describe('POST - Cadastro de um produto', function () {
+    it('Com informações válidas', async function () {
+      // arrange
+      sinon.stub(productModel, 'createProduct').resolves(4);
+      sinon.stub(productModel, 'getId').resolves(productsMockService[3]);
+      
+      // act
+      const result = await productService.createProduct(newProductService.name);
+
+      // assert
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(productsMockService[3]);
+    });
+
+    it('Com informações não enviadas', async function () {
+      // arrange
+      sinon.stub(productModel, 'createProduct').resolves(undefined);
+      // sinon.stub(productModel, 'getId').resolves(undefined);
+      
+      // act
+      const result = await productService.createProduct(undefined);
+
+      // assert
+      expect(result.type).to.equal(404);
+      expect(result.message).to.deep.equal('Input your product');
     });
   });
 

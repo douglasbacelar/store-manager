@@ -13,6 +13,11 @@ const productsMockModel = [
   },
 ];
 
+const newProductModel = {
+  name: 'computador',
+};
+
 module.exports = {
   productsMockModel,
+  newProductModel,
 };

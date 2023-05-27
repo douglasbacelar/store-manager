@@ -18,7 +18,12 @@ const productsMockService = [
   },
 ];
 
+const newProductService = {
+  name: 'computador',
+};
+
 module.exports = {
   correctProductIdMockService,
   productsMockService,
+  newProductService,
 };
