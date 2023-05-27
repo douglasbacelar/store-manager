@@ -7,7 +7,8 @@ const getAll = async () => {
 
 const getId = async (salesId) => {
   const listId = await salesModel.getId(salesId);
-  if (!listId) return { type: 404, message: 'Product not found' };
+  console.log(listId, 'listid');
+  if (!listId || listId.length === 0) return { type: 404, message: 'Sale not found' };
   return { type: null, message: listId };
 };
 

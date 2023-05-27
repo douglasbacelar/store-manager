@@ -12,7 +12,7 @@ const { productController } = require('../../../src/controllers');
 
 const { mockNotFoundProduct, mockFoundAllProduct } = require('./mocks/products.controller.mock');
 
-describe('Testando Products Controller', function () {
+describe('Controller -> Testando Products Controller', function () {
   describe('Procura de produto com id inexistente e existente', function () {
     it('ProductId inexistente status 404 e mensagem product not found', async function () {
      // Arrange

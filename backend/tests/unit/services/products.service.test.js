@@ -6,7 +6,7 @@ const { productModel } = require('../../../src/models');
 const { correctProductIdMockService,
    productsMockService } = require('./mocks/products.service.mock');
 
-describe('Verificando service products', function () {
+describe('Service -> Verificando service products', function () {
   describe('listagem de todos os produtos', function () {
     it('Retorna lista completa dos produtos', async function () {
       // Arrange

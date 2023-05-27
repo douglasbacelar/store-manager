@@ -9,8 +9,10 @@ const getId = async (req, res) => {
     const { salesId } = req.params;
     const listId = await salesService.getId(salesId);
     if (listId.type) {
+      console.log(listId);
       return res.status(404).json({ message: listId.message });
     }
+    console.log(listId, 'outro');
     return res.status(200).json(listId.message);
 };
 
