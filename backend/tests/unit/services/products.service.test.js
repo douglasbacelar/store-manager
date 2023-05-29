@@ -69,6 +69,34 @@ describe('Service -> Verificando service products', function () {
     });
   });
 
+  // describe('PUT - Atualização de um produto', function () {
+  //   it('Com informações válidas', async function () {
+  //     // arrange
+  //     sinon.stub(productModel, 'updateProduct').resolves(4);
+  //     // sinon.stub(productModel, 'getId').resolves(productsMockService[3]);
+      
+  //     // act
+  //     const result = await productService.createProduct(newProductService.name);
+
+  //     // assert
+  //     expect(result.type).to.equal(null);
+  //     expect(result.message).to.deep.equal(productsMockService[3]);
+  //   });
+
+  //   it('Com informações não enviadas', async function () {
+  //     // arrange
+  //     sinon.stub(productModel, 'createProduct').resolves(undefined);
+  //     // sinon.stub(productModel, 'getId').resolves(undefined);
+      
+  //     // act
+  //     const result = await productService.createProduct(undefined);
+
+  //     // assert
+  //     expect(result.type).to.equal(404);
+  //     expect(result.message).to.deep.equal('Input your product');
+  //   });
+  // });
+
   afterEach(function () {
     sinon.restore();
   });

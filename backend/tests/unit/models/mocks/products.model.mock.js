@@ -17,7 +17,13 @@ const newProductModel = {
   name: 'computador',
 };
 
+const refreshProduct = {
+  id: 1,
+  name: 'Martelo do Batman',
+};
+
 module.exports = {
   productsMockModel,
   newProductModel,
+  refreshProduct,
 };

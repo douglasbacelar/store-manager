@@ -8,6 +8,13 @@ const invalidProductName = (req, res, next) => {
   return next();
 };
 
+const invalidUpdateIdProductName = (req, res, next) => {
+  const { productId } = req.params;
+  if (!productId) return res.status(404).json({ message: 'Product not found' });
+  return next();
+};
+
 module.exports = {
   invalidProductName,
+  invalidUpdateIdProductName,
 };

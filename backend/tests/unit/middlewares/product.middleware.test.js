@@ -1,7 +1,8 @@
 const sinon = require('sinon');
 const chai = require('chai');
 const sinonChai = require('sinon-chai');
-const { invalidProductName } = require('../../../src/middlewares/invalidProductName');
+const { invalidProductName, 
+  invalidUpdateIdProductName } = require('../../../src/middlewares/invalidProductName');
 
 const { expect } = chai;
 
@@ -41,6 +42,24 @@ describe('Testando Middleware - InvalidProductName', function () {
      expect(res.status).to.have.been.calledWith(422);
      expect(res.json).to.have.been.calledWith({
        message: '"name" length must be at least 5 characters long',
+     });
+     });
+
+     it(`Deve retornar mensagem product not found
+     e status 404 quando for atualizar o não existir o id procurado`, async function () {
+      // AAA
+      const res = {};
+      const req = { params: { id: 9999 }, body: { name: 'teste' } };
+      const next = sinon.stub().returns();
+     
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+ 
+      invalidUpdateIdProductName(req, res, next);
+ 
+     expect(res.status).to.have.been.calledWith(404);
+     expect(res.json).to.have.been.calledWith({
+       message: 'Product not found',
      });
      });
   });
