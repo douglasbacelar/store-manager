@@ -32,7 +32,19 @@ const salesMockId = [
   },
 ];
 
+const newSalesModel = [
+  {
+    productId: 1,
+    quantity: 12,
+  },
+  {
+    productId: 2,
+    quantity: 3,
+  },
+];
+
 module.exports = {
   salesMockModel,
   salesMockId,
+  newSalesModel,
 };

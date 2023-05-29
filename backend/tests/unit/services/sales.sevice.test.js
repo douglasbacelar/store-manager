@@ -2,9 +2,9 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 const { salesService } = require('../../../src/services');
-const { salesModel } = require('../../../src/models');
+const { salesModel, productModel } = require('../../../src/models');
 const { correctSaleIdMockService,
-salesMockService } = require('./mocks/sales.service.mock');
+salesMockService, newSalesMockService } = require('./mocks/sales.service.mock');
 
 describe('Service -> Verificando service sales', function () {
   describe('listagem de todas as vendas', function () {
@@ -38,6 +38,37 @@ describe('Service -> Verificando service sales', function () {
       // Assert
       expect(result.message).to.be.deep.equal(correctSaleIdMockService);
     });
+  });
+
+  describe('POST - Cadastro de uma venda', function () {
+    it('Com informações válidas', async function () {
+      // arrange
+      sinon.stub(productModel, 'getId').resolves(1);
+      sinon.stub(salesModel, 'createSalesId').resolves(4);
+      sinon.stub(salesModel, 'salesCriated')
+        .resolves(newSalesMockService);
+      
+      // act
+      const result = await salesService
+        .salesCriated(newSalesMockService);
+
+      // assert
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal({ id: 4, itemsSold: newSalesMockService });
+    });
+
+    // it('Com informações não enviadas', async function () {
+    //   // arrange
+    //   sinon.stub(productModel, 'createProduct').resolves(undefined);
+    //   // sinon.stub(productModel, 'getId').resolves(undefined);
+      
+    //   // act
+    //   const result = await productService.createProduct(undefined);
+
+    //   // assert
+    //   expect(result.type).to.equal(404);
+    //   expect(result.message).to.deep.equal('Input your product');
+    // });
   });
 
   afterEach(function () {

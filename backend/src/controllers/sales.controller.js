@@ -16,7 +16,17 @@ const getId = async (req, res) => {
     return res.status(200).json(listId.message);
 };
 
+const salesCriated = async (req, res) => {
+  const data = req.body;
+  const result = await salesService.salesCriated(data);
+  if (result.type) {
+    return res.status(404).json({ message: result.message });
+  }
+  return res.status(201).json(result.message);
+};
+
 module.exports = {
   getAll,
   getId,
+  salesCriated,
 };

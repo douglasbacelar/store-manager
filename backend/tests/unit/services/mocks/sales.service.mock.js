@@ -25,7 +25,19 @@ const salesMockService = [
   },
 ];
 
+const newSalesMockService = [
+  {
+    productId: 1,
+    quantity: 1,
+  },
+  {
+    productId: 1,
+    quantity: 5,
+  },
+];
+
 module.exports = {
   correctSaleIdMockService,
   salesMockService,
+  newSalesMockService,
 };
