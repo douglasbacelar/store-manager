@@ -71,6 +71,45 @@ describe('Service -> Verificando service sales', function () {
     // });
   });
 
+  describe('DELETE - Excluindo uma venda', function () {
+    it('Com informações válidas', async function () {
+      // arrange
+      sinon.stub(salesModel, 'getId').resolves([
+        {
+          date: '2023-05-30T18:43:03.000Z',
+          productId: 1,
+          quantity: 5,
+        },
+        {
+          date: '2023-05-30T18:43:03.000Z',
+          productId: 2,
+          quantity: 10,
+        },
+      ]);
+      sinon.stub(salesModel, 'deleteSale').resolves();
+      
+      // act
+      const result = await salesService.deleteSale(1);
+
+      // assert
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(null);
+    });
+
+    it('Com informações não enviadas', async function () {
+      // arrange
+      sinon.stub(salesModel, 'getId').resolves([]);
+      sinon.stub(salesModel, 'deleteSale').resolves();
+      
+      // act
+      const result = await salesService.deleteSale(undefined);
+
+      // assert
+      expect(result.type).to.equal(404);
+      expect(result.message).to.deep.equal('Sale not found');
+    });
+  });
+
   afterEach(function () {
     sinon.restore();
   });

@@ -14,6 +14,7 @@ invalidRequiredQuantitySales,
 salesController.salesCriated,
 );
 router.get('/:salesId', salesController.getId);
+router.delete('/:salesId', salesController.deleteSale);
 
 module.exports = router;
 

@@ -21,14 +21,22 @@ const salesCriated = async (data) => {
   const createId = await salesModel.createSalesId();
   const salePromise = data.map((sale) => salesModel.salesCriated(createId, sale));
   const result = await Promise.all(salePromise);
-  console.log(result[1]);
   const saleMessage = { type: null, message: { id: createId, itemsSold: result[1] } };
 
   return saleMessage;
+};
+
+const deleteSale = async (salesId) => {
+  const searchSale = await salesModel.getId(salesId);
+
+  if (searchSale.length === 0) return { type: 404, message: 'Sale not found' };
+  await salesModel.deleteSale(salesId);
+  return { type: null, message: null };
 };
 
 module.exports = {
   getAll,
   getId,
   salesCriated,
+  deleteSale,
 };
