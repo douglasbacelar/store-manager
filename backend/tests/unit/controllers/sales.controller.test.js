@@ -70,6 +70,55 @@ describe('Controller -> Testando Sales Controller', function () {
       expect(res.json).to.have.been.calledWith(mockFoundAllSales);
     });
   });
+
+  describe('Model -> Testes endpoint POST', function () {
+    it('Cria uma venda', async function () {
+     // Arrange
+      const res = {};
+      const req = { body: [
+        {
+          productId: 1,
+          quantity: 1,
+        },
+        {
+          productId: 2,
+          quantity: 5,
+        },
+      ] };
+      sinon.stub(salesService, 'salesCriated')
+      .resolves({ type: null,
+          message: { id: 4,
+          itemsSold: [
+                  {
+                    productId: 1,
+                    quantity: 1,
+                  },
+                  {
+                    productId: 2,
+                    quantity: 5,
+                  },
+                ] } });
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      // Act
+
+      await salesController.salesCriated(req, res);
+
+      expect(res.status).to.have.been.calledWith(201);
+      expect(res.json).to.have.been.calledWith({ id: 4,
+        itemsSold: [
+                {
+                  productId: 1,
+                  quantity: 1,
+                },
+                {
+                  productId: 2,
+                  quantity: 5,
+                },
+              ] });
+    });
+  });
   
   afterEach(function () {
     sinon.restore();

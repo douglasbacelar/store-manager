@@ -97,6 +97,33 @@ describe('Service -> Verificando service products', function () {
   //   });
   // });
 
+  describe('DELETE - Excluindo um produto', function () {
+    it('Com informações válidas', async function () {
+      // arrange
+      sinon.stub(productModel, 'getId').resolves({ id: 2, name: 'Martelo de Thor' });
+      sinon.stub(productModel, 'deleteProduct').resolves();
+      
+      // act
+      const result = await productService.deleteProduct(1);
+
+      // assert
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal(null);
+    });
+
+    it('Com informações não enviadas', async function () {
+      // arrange
+      sinon.stub(productModel, 'getId').resolves(undefined);
+      sinon.stub(productModel, 'deleteProduct').resolves();
+      
+      // act
+      const result = await productService.deleteProduct(undefined);
+
+      // assert
+      expect(result.type).to.equal(404);
+      expect(result.message).to.deep.equal('Product not found');
+    });
+  });
   afterEach(function () {
     sinon.restore();
   });

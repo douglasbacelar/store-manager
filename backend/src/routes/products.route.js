@@ -15,5 +15,6 @@ invalidUpdateIdProductName,
 invalidProductName, 
 productController.updateProduct,
 );
+router.delete('/:productId', productController.deleteProduct);
 
 module.exports = router;

@@ -43,7 +43,6 @@ const salesCriated = async (createId, sale) => {
     FROM sales_products WHERE sale_id = ?`,
     [createId],
   );
-  console.log(result);
   return result;
 };
 

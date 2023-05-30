@@ -38,16 +38,27 @@ describe('Model -> Testes de unidade do model de produtos', function () {
     });
 });
 
-describe('Model -> Testes endpoint PUT', function () {
-  it('Atualizando um produto', async function () {
-    // Arrange
-  sinon.stub(connection, 'execute').resolves([{ id: 1 }]);
-  // Act
-  const result = await productModel.updateProduct(refreshProduct);
-  // Assert
-  expect(result.id).to.equal(1);
+  describe('Model -> Testes endpoint PUT', function () {
+    it('Atualizando um produto', async function () {
+      // Arrange
+    sinon.stub(connection, 'execute').resolves([{ id: 1 }]);
+    // Act
+    const result = await productModel.updateProduct(refreshProduct);
+    // Assert
+    expect(result.id).to.equal(1);
+    });
   });
-});
+
+    describe('Model -> Testes endpoint DELETE', function () {
+    it('Excluindo um produto', async function () {
+      // Arrange
+    sinon.stub(connection, 'execute').resolves([1]);
+    // Act
+    const result = await productModel.deleteProduct(1);
+    // Assert
+    expect(result).to.equal(1);
+    });
+  });
   afterEach(function () {
     sinon.restore();
   });

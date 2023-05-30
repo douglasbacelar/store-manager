@@ -84,6 +84,42 @@ describe('Controller -> Testando Products Controller', function () {
       expect(res.json).to.have.been.calledWith(mockFoundAllProduct[3]);
     });
   });
+
+  describe('Model -> Testes endpoint DELETE', function () {
+    it('Deleta um produto com sucesso', async function () {
+     // Arrange
+      const res = {};
+      const req = { params: 1 };
+      sinon.stub(productService, 'deleteProduct')
+      .resolves({ type: null, message: null });
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      // Act
+
+      await productController.deleteProduct(req, res);
+
+      expect(res.status).to.have.been.calledWith(204);
+      // expect(res.end).to.have.been.calledWith(null);
+    });
+
+    it('Deleta um produto que não existe', async function () {
+      // Arrange
+       const res = {};
+       const req = { params: 9999 };
+       sinon.stub(productService, 'deleteProduct')
+       .resolves({ type: 404, message: 'Product not found' });
+ 
+       res.status = sinon.stub().returns(res);
+       res.json = sinon.stub().returns();
+       // Act
+ 
+       await productController.deleteProduct(req, res);
+ 
+       expect(res.status).to.have.been.calledWith(404);
+       expect(res.json).to.have.been.calledWith({ message: 'Product not found' });
+     });
+  });
   
   afterEach(function () {
     sinon.restore();
