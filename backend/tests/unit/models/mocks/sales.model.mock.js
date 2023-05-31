@@ -32,6 +32,14 @@ const salesMockId = [
   },
 ];
 
+const saleAndProcuctMockId = [
+  {
+    date: '2023-05-27T12:13:53.000Z',
+    productId: 1,
+    quantity: 5,
+  },
+];
+
 const newSalesModel = [
   {
     productId: 1,
@@ -47,4 +55,5 @@ module.exports = {
   salesMockModel,
   salesMockId,
   newSalesModel,
+  saleAndProcuctMockId,
 };

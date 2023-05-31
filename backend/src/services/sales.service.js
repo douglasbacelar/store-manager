@@ -34,9 +34,24 @@ const deleteSale = async (salesId) => {
   return { type: null, message: null };
 };
 
+const updateSale = async (quantity, productId, saleId) => {
+  const searchProductId = await salesModel.getId(productId);
+  if (searchProductId.length === 0) return { type: 404, message: 'Product not found in sale' };
+  
+  await salesModel.updateSale(quantity, productId, saleId);
+
+  const [searchSale] = await salesModel.getBySaleAndProduct(saleId, productId);
+  console.log(searchSale, 'searchhh');
+  if (!searchSale) return { type: 404, message: 'Sale not found' };
+  searchSale.saleId = +saleId;
+  
+  return { type: null, message: searchSale };
+};
+
 module.exports = {
   getAll,
   getId,
   salesCriated,
   deleteSale,
+  updateSale,
 };

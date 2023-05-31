@@ -27,7 +27,6 @@ const salesCriated = async (req, res) => {
 
 const deleteSale = async (req, res) => {
   const { salesId } = req.params;
-  console.log(salesId, 'undefined?');
   const deleteSaleId = await salesService.deleteSale(salesId);
 
   if (deleteSaleId.type) {
@@ -36,9 +35,20 @@ const deleteSale = async (req, res) => {
   return res.status(204).json();
 };
 
+const updateSale = async (req, res) => {
+  const { saleId, productId } = req.params;
+  const { quantity } = req.body;
+  const saleUpdated = await salesService.updateSale(quantity, productId, saleId);
+  if (saleUpdated.type) {
+    return res.status(404).json({ message: saleUpdated.message });
+  }
+  return res.status(200).json(saleUpdated.message);
+};
+
 module.exports = {
   getAll,
   getId,
   salesCriated,
   deleteSale,
+  updateSale,
 };

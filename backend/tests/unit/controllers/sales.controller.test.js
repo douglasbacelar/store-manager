@@ -119,6 +119,59 @@ describe('Controller -> Testando Sales Controller', function () {
               ] });
     });
   });
+
+  describe('Model -> Testes endpoint PUT', function () {
+    it('Atualiza uma venda', async function () {
+     // Arrange
+      const res = {};
+      const req = { params: { productId: 1, saleId: 1 },
+        body: {
+          quantity: 2,
+        },
+ };
+      sinon.stub(salesService, 'updateSale')
+      .resolves({ type: null,
+        message: {
+          date: '2023-05-31T13:27:10.000Z',
+          productId: 1,
+          quantity: 5,
+          saleId: 1,
+        } });
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      // Act
+
+      await salesController.updateSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith({
+        date: '2023-05-31T13:27:10.000Z',
+        productId: 1,
+        quantity: 5,
+        saleId: 1,
+      });
+    });
+  });
+
+  describe('Model -> Testes endpoint DELETE', function () {
+    it('Apaga uma venda', async function () {
+     // Arrange
+      const res = {};
+      const req = { params: { saleId: 1 } };
+      sinon.stub(salesService, 'deleteSale')
+      .resolves({ type: null, message: null });
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      // Act
+
+      await salesController.deleteSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(204);
+      expect(res.json).to.have.been.calledWith();
+    });
+  });
   
   afterEach(function () {
     sinon.restore();
