@@ -15,7 +15,7 @@ const invalidRequiredQuantitySales = (req, res, next) => {
 
   if (!requiredQuantity) return res.status(400).json({ message: '"quantity" is required' });
 
-  const quantityValue = data.every((qtde) => qtde.quantity > 0);
+  const quantityValue = data.some((qtde) => qtde.quantity > 0);
 
   if (!quantityValue) {
     return res.status(422)
