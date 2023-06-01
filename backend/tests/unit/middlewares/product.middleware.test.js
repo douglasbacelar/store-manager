@@ -15,9 +15,6 @@ describe('Testando Middleware - InvalidProductName', function () {
      const req = { body: { name: 'produtoX' } };
      const res = {};
      const next = sinon.stub().returns();
-    
-     // res.status = sinon.stub().returns(res);
-     // res.json = sinon.stub().returns();
 
      invalidProductName(req, res, next);
 
@@ -58,6 +55,24 @@ describe('Testando Middleware - InvalidProductName', function () {
      });
      });
 
+         it(`Inválidos:Deve retornar mensagem name length must be at least 5 characters long
+     e status 422`, async function () {
+      // AAA
+      const res = {};
+      const req = { body: { name: 'oiiii' } };
+      const next = sinon.stub().returns();
+     
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+ 
+      invalidProductName(req, res, next);
+ 
+     expect(res.status).to.have.been.calledWith(422);
+     expect(res.json).to.have.been.calledWith({
+       message: '"name" length must be at least 5 characters long',
+     });
+     });
+
      it(`Deve retornar mensagem product not found
      e status 404 quando for atualizar o não existir o id procurado`, async function () {
       // AAA
@@ -84,9 +99,6 @@ describe('Testando Middleware - InvalidProductName', function () {
      const req = { params: { productId: 1 } };
      const res = {};
      const next = sinon.stub().returns();
-    
-     // res.status = sinon.stub().returns(res);
-     // res.json = sinon.stub().returns();
 
      invalidUpdateIdProductName(req, res, next);
 

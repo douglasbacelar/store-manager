@@ -89,7 +89,7 @@ describe('Testando Middleware - invalidRequiredProductSales', function () {
       const req = { body: [
         {
           productId: 2,
-          quantity: 2,
+          quantity: 0,
         },
         {
           productId: 2,
@@ -187,6 +187,34 @@ describe('Testando Middleware - invalidRequiredProductSales', function () {
          invalidRequiredQuantitySales(req, res, next);
      
           expect(next).to.have.been.calledWith();
+         });
+
+         it(`Deve retornar mensagem quantity must be greater than or equal to 1
+         e status 422`, async function () {
+          // AAA
+          const res = {};
+          const req = { body: [
+            {
+              productId: 1,
+              quantity: -5,
+            },
+            {
+              productId: 2,
+              quantity: -6,
+            },
+          ],
+           };
+          const next = sinon.stub().returns();
+         
+          res.status = sinon.stub().returns(res);
+          res.json = sinon.stub().returns();
+     
+          invalidRequiredQuantitySales(req, res, next);
+     
+         expect(res.status).to.have.been.calledWith(422);
+         expect(res.json).to.have.been.calledWith({
+           message: '"quantity" must be greater than or equal to 1',
+         });
          });
         });
       });
