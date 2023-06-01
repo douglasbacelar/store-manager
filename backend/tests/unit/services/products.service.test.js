@@ -18,6 +18,16 @@ describe('Service -> Verificando service products', function () {
       expect(result.type).to.be.equal(null);
       expect(result.message).to.deep.equal(productsMockService);
     });
+
+    it('Retorna lista dos produtos com filtro selecionado', async function () {
+      // Arrange
+      sinon.stub(productModel, 'searchProduct').resolves(productsMockService[0]);
+      // Act
+      const result = await productService.searchProduct('M');
+      // Assert
+      expect(result.type).to.be.equal(null);
+      expect(result.message).to.deep.equal(productsMockService[0]);
+    });
   });
 
   describe('GET- listagem de produto especifico', function () {
@@ -54,48 +64,40 @@ describe('Service -> Verificando service products', function () {
       expect(result.type).to.equal(null);
       expect(result.message).to.deep.equal(productsMockService[3]);
     });
+  });
 
-    it('Com informações não enviadas', async function () {
+  describe('PUT - Atualização de um produto', function () {
+    it('Com informações válidas', async function () {
       // arrange
-      sinon.stub(productModel, 'createProduct').resolves(undefined);
-      // sinon.stub(productModel, 'getId').resolves(undefined);
+      sinon.stub(productModel, 'updateProduct').resolves();
+      sinon.stub(productModel, 'getId').resolves({
+        id: 3,
+        name: 'ProdutoX',
+      });
       
       // act
-      const result = await productService.createProduct(undefined);
+      const result = await productService.updateProduct(3, 'ProdutoX');
+      // assert
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal({
+        id: 3,
+        name: 'ProdutoX',
+      });
+    });
+
+    it('Com informações inválidas', async function () {
+      // arrange
+      sinon.stub(productModel, 'updateProduct').resolves();
+      sinon.stub(productModel, 'getId').resolves(undefined);
+      
+      // act
+      const result = await productService.updateProduct(75, 'ProdutoX');
 
       // assert
       expect(result.type).to.equal(404);
-      expect(result.message).to.deep.equal('Input your product');
+      expect(result.message).to.deep.equal('Product not found');
     });
   });
-
-  // describe('PUT - Atualização de um produto', function () {
-  //   it('Com informações válidas', async function () {
-  //     // arrange
-  //     sinon.stub(productModel, 'updateProduct').resolves(4);
-  //     // sinon.stub(productModel, 'getId').resolves(productsMockService[3]);
-      
-  //     // act
-  //     const result = await productService.createProduct(newProductService.name);
-
-  //     // assert
-  //     expect(result.type).to.equal(null);
-  //     expect(result.message).to.deep.equal(productsMockService[3]);
-  //   });
-
-  //   it('Com informações não enviadas', async function () {
-  //     // arrange
-  //     sinon.stub(productModel, 'createProduct').resolves(undefined);
-  //     // sinon.stub(productModel, 'getId').resolves(undefined);
-      
-  //     // act
-  //     const result = await productService.createProduct(undefined);
-
-  //     // assert
-  //     expect(result.type).to.equal(404);
-  //     expect(result.message).to.deep.equal('Input your product');
-  //   });
-  // });
 
   describe('DELETE - Excluindo um produto', function () {
     it('Com informações válidas', async function () {

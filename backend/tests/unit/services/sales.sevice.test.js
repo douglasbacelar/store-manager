@@ -57,18 +57,21 @@ describe('Service -> Verificando service sales', function () {
       expect(result.message).to.deep.equal({ id: 4, itemsSold: newSalesMockService });
     });
 
-    // it('Com informações não enviadas', async function () {
-    //   // arrange
-    //   sinon.stub(productModel, 'createProduct').resolves(undefined);
-    //   // sinon.stub(productModel, 'getId').resolves(undefined);
+    it('Com informações inválidas', async function () {
+      // arrange
+      sinon.stub(productModel, 'getId').resolves(undefined);
+      // sinon.stub(salesModel, 'createSalesId').resolves(4);
+      // sinon.stub(salesModel, 'salesCriated')
+      //   .resolves(newSalesMockService);
       
-    //   // act
-    //   const result = await productService.createProduct(undefined);
+      // act
+      const result = await salesService
+        .salesCriated(newSalesMockService);
 
-    //   // assert
-    //   expect(result.type).to.equal(404);
-    //   expect(result.message).to.deep.equal('Input your product');
-    // });
+      // assert
+      expect(result.type).to.equal('product not found');
+      expect(result.message).to.deep.equal('Product not found');
+    });
   });
 
   describe('DELETE - Excluindo uma venda', function () {
@@ -104,6 +107,67 @@ describe('Service -> Verificando service sales', function () {
       // act
       const result = await salesService.deleteSale(undefined);
 
+      // assert
+      expect(result.type).to.equal(404);
+      expect(result.message).to.deep.equal('Sale not found');
+    });
+  });
+
+  describe('PUT - Atualização de uma venda', function () {
+    it('Com informações válidas', async function () {
+      // arrange
+      sinon.stub(salesModel, 'getId').resolves([
+        {
+          date: '2023-06-01T12:55:44.000Z',
+          productId: 3,
+          quantity: 25,
+        },
+      ]);
+      sinon.stub(salesModel, 'updateSale').resolves();
+      sinon.stub(salesModel, 'getBySaleAndProduct').resolves([{
+        date: '2023-06-01T12:55:44.000Z',
+        productId: 3,
+        quantity: 25,
+      }]);
+      
+      // act
+      const result = await salesService.updateSale(25, 3, 1);
+      // assert
+      expect(result.type).to.equal(null);
+      expect(result.message).to.deep.equal({
+        date: '2023-06-01T12:55:44.000Z',
+        productId: 3,
+        quantity: 25,
+        saleId: 1,
+      });
+    });
+
+    it('Com informações inválidas de produto não encontrado', async function () {
+      // arrange
+      sinon.stub(salesModel, 'getId').resolves([]);
+      sinon.stub(salesModel, 'updateSale').resolves();
+      
+      // act
+      const result = await salesService.updateSale(25, 3000, 1);
+      // assert
+      expect(result.type).to.equal(404);
+      expect(result.message).to.deep.equal('Product not found in sale');
+    });
+
+    it('Com informações inválidas de venda não encontrada', async function () {
+      // arrange
+      sinon.stub(salesModel, 'getId').resolves([
+        {
+          date: '2023-06-01T12:55:44.000Z',
+          productId: 3,
+          quantity: 25,
+        },
+      ]);
+      sinon.stub(salesModel, 'updateSale').resolves();
+      sinon.stub(salesModel, 'getBySaleAndProduct').resolves([undefined]);
+      
+      // act
+      const result = await salesService.updateSale(25, 3, 1000);
       // assert
       expect(result.type).to.equal(404);
       expect(result.message).to.deep.equal('Sale not found');

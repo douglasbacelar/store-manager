@@ -7,6 +7,7 @@ const { invalidProductName,
    invalidUpdateIdProductName } = require('../middlewares/invalidProductName');
 
 router.get('/', productController.getAll);
+router.get('/search', productController.searchProduct);
 router.post('/', invalidProductName, productController.createProduct);
 router.get('/:productId', productController.getId);
 router.put(

@@ -4,7 +4,8 @@ const sinon = require('sinon');
 const connection = require('../../../src/models/connection');
 const { salesModel } = require('../../../src/models');
 const { salesMockModel, salesMockId, newSalesModel,
-   saleAndProcuctMockId } = require('./mocks/sales.model.mock');
+   saleAndProcuctMockId, 
+   salesUpdatedMockModel } = require('./mocks/sales.model.mock');
 
 describe('Model -> Testes de unidade do model de sales', function () {
   it('GET ID -> Listando todos os produtos', async function () {
@@ -62,6 +63,28 @@ describe('Model -> Testes de unidade do model de sales', function () {
     expect(result).to.equal(42);
     });
 });
+
+describe('Model -> Testes endpoint PUT', function () {
+  it('Atualizando uma venda', async function () {
+    // Arrange
+  sinon.stub(connection, 'execute').resolves(salesUpdatedMockModel);
+  // Act
+  const result = await salesModel.updateSale(25, 1, 1);
+  // Assert
+  expect(result.quantity).to.equal(25);
+  });
+});
+
+  describe('Model -> Testes endpoint DELETE', function () {
+    it('Excluindo uma venda', async function () {
+      // Arrange
+    sinon.stub(connection, 'execute').resolves([1]);
+    // Act
+    const result = await salesModel.deleteSale(1);
+    // Assert
+    expect(result).to.equal(1);
+    });
+  });
 
   afterEach(function () {
     sinon.restore();

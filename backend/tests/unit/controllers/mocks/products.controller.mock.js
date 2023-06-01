@@ -22,7 +22,10 @@ const mockFoundAllProduct = [
   },
 ];
 
+const productNotFound = { message: 'Product not found' };
+
 module.exports = { 
   mockNotFoundProduct,
   mockFoundAllProduct,
+  productNotFound,
 };

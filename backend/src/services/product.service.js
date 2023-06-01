@@ -12,7 +12,6 @@ const getId = async (productId) => {
 };
 
 const createProduct = async (name) => {
-  if (!name) return { type: 404, message: 'Input your product' };
   const newProductId = await productModel.createProduct({ name });
   const newProduct = await productModel.getId(newProductId);
 
@@ -33,10 +32,16 @@ const deleteProduct = async (id) => {
   return { type: null, message: null };
 };
 
+const searchProduct = async (q) => {
+  const infoProduct = await productModel.searchProduct(q);
+  return { type: null, message: infoProduct };
+};
+
 module.exports = {
   getAll,
   getId,
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProduct,
 };

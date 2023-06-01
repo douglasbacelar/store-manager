@@ -17,6 +17,15 @@ describe('Model -> Testes de unidade do model de produtos', function () {
     expect(result).to.be.deep.equal(productsMockModel);
   });
 
+    it('Listando todos os produtos e filtrando com a palavra escolhida', async function () {
+    // Arrange
+    sinon.stub(connection, 'execute').resolves([productsMockModel]);
+    // Act
+    const result = await productModel.searchProduct('M');
+    // Assert
+    expect(result).to.be.deep.equal([productsMockModel[0]]);
+  });
+
   it('Recuperando um produto a partir do seu id', async function () {
     // Arrange
     sinon.stub(connection, 'execute').resolves([[productsMockModel[1]]]);

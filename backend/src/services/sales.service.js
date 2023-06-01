@@ -36,12 +36,13 @@ const deleteSale = async (salesId) => {
 
 const updateSale = async (quantity, productId, saleId) => {
   const searchProductId = await salesModel.getId(productId);
+  console.log(searchProductId);
   if (searchProductId.length === 0) return { type: 404, message: 'Product not found in sale' };
   
   await salesModel.updateSale(quantity, productId, saleId);
 
   const [searchSale] = await salesModel.getBySaleAndProduct(saleId, productId);
-  console.log(searchSale, 'searchhh');
+  console.log(searchSale, 'oii');
   if (!searchSale) return { type: 404, message: 'Sale not found' };
   searchSale.saleId = +saleId;
   

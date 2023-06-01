@@ -10,8 +10,27 @@ const { expect } = chai;
 chai.use(sinonChai);
 
 describe('Testando Middleware - invalidRequiredProductSales', function () {
-  describe('Body inválidos enviados', function () {
-    it('Deve retornar mensagem "productId" is required" e status 400', async function () {
+  describe('Body enviados', function () {
+    it('Happy message', async function () {
+     // AAA
+     const res = {};
+     const req = { body: [
+      {
+        productId: 1,
+        quantity: 1,
+      },
+      {
+        productId: 2,
+        quantity: 5,
+      },
+    ] };
+    const next = sinon.stub().returns();
+
+     invalidRequiredProductSales(req, res, next);
+
+     expect(next).to.have.been.calledWith();
+    });
+    it('Inválidos-Deve retornar mensagem "productId" is required" e status 400', async function () {
      // AAA
      const res = {};
      const req = { body: [
@@ -36,7 +55,7 @@ describe('Testando Middleware - invalidRequiredProductSales', function () {
     });
     });
 
-    it(`Deve retornar mensagem quantity must be greater than or equal to 1
+    it(`Inválidos-Deve retornar mensagem quantity must be greater than or equal to 1
      e status 422`, async function () {
       // AAA
       const res = {};
@@ -63,7 +82,7 @@ describe('Testando Middleware - invalidRequiredProductSales', function () {
      });
      });
 
-     it(`Deve retornar mensagem '"quantity" is required'
+     it(`Inválidos-Deve retornar mensagem '"quantity" is required'
      e status 400 quando mão for passado quantidade`, async function () {
       // AAA
       const res = {};
@@ -91,7 +110,21 @@ describe('Testando Middleware - invalidRequiredProductSales', function () {
   });
 
   describe('Testando Middleware - notFoundQuantity', function () {
-    describe('Body inválidos enviados', function () {
+    describe('Body enviados', function () {
+      it('Happy message', async function () {
+        // AAA
+        const res = {};
+        const req = { params: { productId: 1, saleId: 1 },
+        body: {
+            quantity: 2,
+          },
+         };
+       const next = sinon.stub().returns();
+   
+       notFoundQuantity(req, res, next);
+   
+        expect(next).to.have.been.calledWith();
+       });
       it(`Deve retornar mensagem quantity must be greater than or equal to 1
        e status 422`, async function () {
         // AAA
@@ -140,7 +173,23 @@ describe('Testando Middleware - invalidRequiredProductSales', function () {
        });
        });
     });
-  
+
+    describe('Testando Middleware -  invalidRequiredQuantitySales', function () {
+      describe('Body enviados', function () {
+        it('Happy message', async function () {
+          // AAA
+          const res = {};
+          const req = { body: [{
+              quantity: 2,
+            }] };
+         const next = sinon.stub().returns();
+     
+         invalidRequiredQuantitySales(req, res, next);
+     
+          expect(next).to.have.been.calledWith();
+         });
+        });
+      });
   afterEach(function () {
     sinon.restore();
   });

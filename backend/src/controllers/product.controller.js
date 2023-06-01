@@ -17,9 +17,6 @@ const getId = async (req, res) => {
 const createProduct = async (req, res) => {
   const { name } = req.body;
   const productCreated = await productService.createProduct(name);
-  if (productCreated.type) {
-    return res.status(404).json({ message: productCreated.message });
-  }
   return res.status(201).json(productCreated.message);
 };
 
@@ -42,10 +39,17 @@ const deleteProduct = async (req, res) => {
   return res.status(204).json();
 };
 
+const searchProduct = async (req, res) => {
+  const { q } = req.query;
+  const infoProduct = await productService.searchProduct(q);
+  return res.status(200).json(infoProduct.message);
+};
+
 module.exports = {
   getAll,
   getId,
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProduct,
 };

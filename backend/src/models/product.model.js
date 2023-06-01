@@ -48,10 +48,20 @@ const deleteProduct = async (id) => {
   return productId;
 };
 
+// /search?q=ar
+
+const searchProduct = async (q) => {
+  const takeAllProducts = await getAll();
+  const filterNameProducts = takeAllProducts.filter((element) => element.name.includes(q));
+
+  return filterNameProducts;
+};
+
 module.exports = {
   getAll,
   getId,
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProduct,
 };
