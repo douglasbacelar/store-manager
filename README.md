@@ -46,7 +46,7 @@ npm run test:coverage
 
 ###  Documentation (endpoints)
 
-### :package: Products
+### Products
 <details>
   <summary> Routes </summary>
   <br>
